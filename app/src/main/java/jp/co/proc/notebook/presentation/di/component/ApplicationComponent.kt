@@ -7,6 +7,8 @@ import jp.co.proc.notebook.domain.executor.ThreadExecutor
 import jp.co.proc.notebook.domain.repository.DicRepository
 import jp.co.proc.notebook.presentation.di.modules.ApplicationModule
 import jp.co.proc.notebook.presentation.ui.activity.BaseActivity
+import jp.co.proc.notebook.presentation.ui.activity.MainActivity
+import jp.co.proc.notebook.presentation.util.DictionaryDatabaseOpenHelper
 import javax.inject.Singleton
 
 /**
@@ -16,6 +18,7 @@ import javax.inject.Singleton
 @Component(modules = [ApplicationModule::class])
 interface ApplicationComponent {
     fun inject(baseActivity: BaseActivity)
+    fun inject(mainActivity: MainActivity)
 
     //Exposed to sub-graphs.
     fun context(): Context
@@ -24,7 +27,11 @@ interface ApplicationComponent {
 
     fun postExecutionThread(): PostExecutionThread
 
+    fun databaseHelper() : DictionaryDatabaseOpenHelper
+
     fun dicRepository() : DicRepository
+
+
 
   //  fun memberRepository(): MemberRepository
 

@@ -45,6 +45,10 @@ android {
             versionName = android.defaultConfig.versionName + revisionTag + '-verify'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/CONTRIBUTORS.md'
+        exclude 'META-INF/LICENSE.md'
+    }
 }
 
 dependencies {
@@ -84,7 +88,12 @@ dependencies {
         transitive = true;
     }
 
+    // Kuromoji
+    implementation 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
+
+
     testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:3.8"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

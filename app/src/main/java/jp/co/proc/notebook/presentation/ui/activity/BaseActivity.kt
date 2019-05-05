@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import jp.co.proc.notebook.AndroidApplication
+import jp.co.proc.notebook.presentation.di.HasComponent
 import jp.co.proc.notebook.presentation.di.component.ApplicationComponent
 import jp.co.proc.notebook.presentation.di.component.DaggerFragmentComponent
 import jp.co.proc.notebook.presentation.di.component.FragmentComponent
 import jp.co.proc.notebook.presentation.di.modules.ActivityModule
 import jp.co.proc.notebook.presentation.navigation.Navigator
-import jp.co.proc.notebook.presentation.di.HasComponent
 import javax.inject.Inject
 
 /**
@@ -35,6 +35,5 @@ abstract class BaseActivity : AppCompatActivity(), HasComponent<FragmentComponen
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        this.applicationComponent?.inject(this)
     }
 }

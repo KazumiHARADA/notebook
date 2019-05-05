@@ -1,5 +1,6 @@
 package jp.co.proc.notebook.presentation.ui.activity
 
+import android.database.Cursor
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.widget.TextView
@@ -7,8 +8,13 @@ import jp.co.proc.notebook.R
 import jp.co.proc.notebook.presentation.ui.fragment.ExamFragment
 import jp.co.proc.notebook.presentation.ui.fragment.InputFragment
 import jp.co.proc.notebook.presentation.ui.fragment.SearchFragment
+import jp.co.proc.notebook.presentation.util.DictionaryDatabaseOpenHelper
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var openHelper : DictionaryDatabaseOpenHelper
 
     private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -38,10 +44,18 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.initializeInjector()
+        this.applicationComponent?.inject(this)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
+        val cursor : Cursor = openHelper.readableDatabase.rawQuery("select count(*) as cnt from items", arrayOf())
+        cursor.moveToFirst()
+        cursor.getInt(cursor.getColumnIndex("cnt"))
+        cursor.close()
+
+        openHelper.getSuggestWords("add")
+
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, InputFragment())
             .commit()
