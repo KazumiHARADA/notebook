@@ -2,13 +2,13 @@ package jp.co.proc.notebook.presentation.di.component
 
 import android.content.Context
 import dagger.Component
+import jp.co.proc.notebook.data.util.DictionaryDatabaseOpenHelper
 import jp.co.proc.notebook.domain.executor.PostExecutionThread
 import jp.co.proc.notebook.domain.executor.ThreadExecutor
 import jp.co.proc.notebook.domain.repository.DicRepository
 import jp.co.proc.notebook.presentation.di.modules.ApplicationModule
 import jp.co.proc.notebook.presentation.ui.activity.BaseActivity
 import jp.co.proc.notebook.presentation.ui.activity.MainActivity
-import jp.co.proc.notebook.presentation.util.DictionaryDatabaseOpenHelper
 import javax.inject.Singleton
 
 /**

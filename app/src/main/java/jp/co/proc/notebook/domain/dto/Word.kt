@@ -6,4 +6,5 @@ package jp.co.proc.notebook.domain.dto
 class Word {
     var id: String = ""
     var text : String = ""
+    var japanese : String = ""
 }

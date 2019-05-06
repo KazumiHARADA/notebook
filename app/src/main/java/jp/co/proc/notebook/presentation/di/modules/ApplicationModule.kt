@@ -9,11 +9,11 @@ import jp.co.proc.notebook.data.api.DicApiClient
 import jp.co.proc.notebook.data.api.DicInterceptor
 import jp.co.proc.notebook.data.executor.JobExecutor
 import jp.co.proc.notebook.data.repository.DicRepositoryImpl
+import jp.co.proc.notebook.data.util.DictionaryDatabaseOpenHelper
 import jp.co.proc.notebook.domain.executor.PostExecutionThread
 import jp.co.proc.notebook.domain.executor.ThreadExecutor
 import jp.co.proc.notebook.domain.repository.DicRepository
 import jp.co.proc.notebook.domain.util.Constant
-import jp.co.proc.notebook.presentation.util.DictionaryDatabaseOpenHelper
 import jp.co.proc.notebook.presentation.util.StethoUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -57,7 +57,7 @@ class ApplicationModule(private val context: Context) {
         dicRepositoryImpl
 
     @Provides
-    fun provideDatabaseOpenHelper() : DictionaryDatabaseOpenHelper  {
+    fun provideDatabaseOpenHelper() : DictionaryDatabaseOpenHelper {
         val  helper = DictionaryDatabaseOpenHelper(this.context)
         helper.uncompressDatabase()
         return helper

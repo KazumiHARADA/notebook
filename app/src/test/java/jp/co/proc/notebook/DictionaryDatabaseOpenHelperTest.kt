@@ -1,6 +1,6 @@
 package jp.co.proc.notebook
 
-import jp.co.proc.notebook.presentation.util.DictionaryDatabaseOpenHelper
+import jp.co.proc.notebook.data.util.DictionaryDatabaseOpenHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,7 +16,7 @@ class DictionaryDatabaseOpenHelperTest {
 
     @Test
     fun `select`() {
-        val helper =  DictionaryDatabaseOpenHelper(RuntimeEnvironment.application)
+        val helper = DictionaryDatabaseOpenHelper(RuntimeEnvironment.application)
         helper.getSuggestWords("add")
     }
 

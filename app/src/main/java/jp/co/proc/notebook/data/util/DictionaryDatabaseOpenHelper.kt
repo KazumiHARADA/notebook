@@ -1,8 +1,7 @@
-package jp.co.proc.notebook.presentation.util
+package jp.co.proc.notebook.data.util
 
 import android.content.Context
 import android.content.res.AssetManager
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -64,7 +63,8 @@ constructor(
                 }
 
                 if (checkDb != null) {
-                    checkDb.version = DATABASE_VERSION
+                    checkDb.version =
+                        DATABASE_VERSION
                     checkDb.close()
                 }
 
@@ -142,17 +142,4 @@ constructor(
             Log.e(TAG, e.message)
         }
     }
-
-    fun getSuggestWords(text : String) {
-        val db : SQLiteDatabase = readableDatabase
-        val cursor : Cursor = db.rawQuery("select * from items where word like ?" ,arrayOf("$text%"))
-        cursor.use {
-            while (cursor.moveToNext()) {
-                Log.d(TAG, cursor.getString(cursor.getColumnIndex("word")))
-                Log.d(TAG, cursor.getString(cursor.getColumnIndex("mean")))
-            }
-        }
-    }
-
-
 }

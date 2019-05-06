@@ -8,10 +8,14 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import jp.co.proc.notebook.domain.dto.WordList
+import android.widget.TextView
+import jp.co.proc.notebook.R
+import jp.co.proc.notebook.domain.dto.Word
 import jp.co.proc.notebook.presentation.presenter.InputPresenter
 import jp.co.proc.notebook.presentation.ui.activity.BaseActivity
+import jp.co.proc.notebook.presentation.ui.adapter.InputEnglishAutoCompleteAdapter
 import kotlinx.android.synthetic.main.fragment_input.*
 import javax.inject.Inject
 
@@ -20,13 +24,11 @@ import javax.inject.Inject
  * Created by kharada on 2019-05-01.
  */
 class InputFragment : Fragment(), InputPresenter.InputView {
-    override fun updateSuggestWords(wordList: WordList) {
-        mAutoCompleteAdapter?.clear()
-        for (word in wordList.words) {
-            mAutoCompleteAdapter?.add(word.text)
-        }
-        //mAutoCompleteAdapter?.originalWords = wordList.words
-        mAutoCompleteAdapter?.notifyDataSetChanged()
+
+    //TODO 辞書の取得はアプリケーション起動時にやったほうがいい
+    override fun updateSuggestWords(wordList: List<Word>) {
+        val adapter = InputEnglishAutoCompleteAdapter(mContext,wordList)
+        inputEnglish.setAdapter(adapter)
     }
 
     override fun showLoading() {
@@ -62,25 +64,23 @@ class InputFragment : Fragment(), InputPresenter.InputView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mInputPresenter.setView(this)
-        mAutoCompleteAdapter = ArrayAdapter<String>(
-            mContext,
-            android.R.layout.simple_dropdown_item_1line,
-            emptyList()
-        )//InputEnglishAutoCompleteAdapter(mContext, emptyList())
-        inputEnglish.setAdapter(mAutoCompleteAdapter)
-        button.setOnClickListener { mInputPresenter.getDetail() }
+        mInputPresenter.getSuggestList()
 
+        inputEnglish.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            inputEnglish.setText(view.findViewById<TextView>(R.id.word)?.text.toString())
+        }
     }
 
     override fun onResume() {
         super.onResume()
+        mInputPresenter.resume()
         inputEnglish.addTextChangedListener(InputTextWatcher())
     }
 
     inner class InputTextWatcher : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             if (s?.length ?: 0 > 2) {
-                mInputPresenter.getSuggestList(s.toString())
+                //mInputPresenter.getSuggestList(s.toString())
             }
         }
 

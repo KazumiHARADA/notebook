@@ -1,7 +1,7 @@
 package jp.co.proc.notebook.domain.interactor
 
 import io.reactivex.Single
-import jp.co.proc.notebook.domain.dto.WordList
+import jp.co.proc.notebook.domain.dto.Word
 import jp.co.proc.notebook.domain.executor.PostExecutionThread
 import jp.co.proc.notebook.domain.executor.ThreadExecutor
 import jp.co.proc.notebook.domain.repository.DicRepository
@@ -15,10 +15,10 @@ internal constructor(
     private val dicRepository: DicRepository,
     threadExecutor: ThreadExecutor,
     postExecutionThread: PostExecutionThread
-) : UseCase<WordList, String>(threadExecutor, postExecutionThread) {
+) : UseCase<List<Word>, String>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseSingle(params: String): Single<WordList> {
-        return dicRepository.searchEnglishToJapanese(params)
+    override fun buildUseCaseSingle(params: String): Single<List<Word>> {
+        return dicRepository.searchSuggestWords(params)
     }
 
 }
